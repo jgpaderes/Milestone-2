@@ -93,27 +93,51 @@ public class Milestone2 {
                     }                     
                 case "payroll_staff":                  
                     System.out.print("Enter your password:  ");
-                    String pswrd = input.nextLine();
-                    if("12345".equals(pswrd)){
+                    String payrollPassword = input.nextLine();
+                    if("12345".equals(payrollPassword)){
                         System.out.println("************************************** \n"); 
                         System.out.println("1. Process Payroll");
                         System.out.println("2. Exit the Program\n");
                         System.out.println("**************************************");
                         
                         System.out.print("What do you want to do? ");
-                        String choice = input.nextLine();
+                        String choicePayroll = input.nextLine();
                         
-                        switch (choice){
+                        switch (choicePayroll){
                             case "1" : 
-                                System.out.println("WIP");
+                                System.out.println("************************************** \n"); 
+                                System.out.println("1. One employee");
+                                System.out.println("2. All Employees");
+                                System.out.println("3. Exit the Program\n");
+                                System.out.println("**************************************");
+                                
+                                System.out.print("What do you want to do? ");
+                                String choiceEmployee = input.nextLine();
+                                
+                                switch (choiceEmployee){
+                                    case "1" : 
+                                        System.out.println("WIP");
+                                        break;
+                                        
+                                    case "2" :
+                                        System.out.println("WIP");
+                                        break;
+                                        
+                                    case "3" : 
+                                        break;
+                                        
+                                    default : 
+                                        System.out.println("Invalid Input!");  
+                                }
                                 break;
                             
                             case "2" :
                                 break;
                              
                             default: 
-                                System.out.println("Invalid Input!");
-                        }       
+                                System.out.println("Invalid Input!");             
+                        }   
+    
                         break;
                     }else{
                         System.out.println("Invalid Password!");   
