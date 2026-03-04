@@ -8,7 +8,7 @@ package milestone.pkg2;
  *
  * @authors 
  * Paderes, Juan Gabriel --- jgpaderes
- * 
+ * Yasoña, Keichelle     --- Keichelle
  * 
  */
 import java.io.BufferedReader;
@@ -122,7 +122,6 @@ public class Milestone2 {
                                 
                                 // Prints payroll summary at the end of each month
                                 monthCount++;
-                                
                                 firstHalf = 0;
                                 secondHalf = 0;
                                 // Resets the total every start of the new month
@@ -137,7 +136,13 @@ public class Milestone2 {
                                     secondHalf += hours;
                             }
                         }
-                    }                  
+                    }    
+                
+                    
+                }
+                if (checker != true){
+                    System.out.println("Employee does not exist.");
+                    return;
                 }
                 firstGrossSalary = firstHalf * Double.valueOf(getRate(employeeNumber));
                 secondGrossSalary = secondHalf * Double.valueOf(getRate(employeeNumber));
@@ -149,9 +154,8 @@ public class Milestone2 {
                 System.out.println("**************************************");
                 // placed outside the while loop to catch December as the loop stops after reading the last item in the CSV
                 
-                if (checker != true){
-                    System.out.println("Employee does not exist.");
-                }    
+                
+                    
                 
             } catch (IOException e) {
                 System.out.println("An error occurred while reading the file.");
@@ -204,12 +208,13 @@ public class Milestone2 {
         
         if (hoursWorked > 1){
             hoursWorked -= 1;
+            // Subtracts an hour for lunch considering the hours worked is above an hour.
         }
 
         if ( hoursWorked > 8.0){
             hoursWorked = 8.0;
             return hoursWorked;
-            // checks for overtime, returns the max working hours
+            // checks for overtime, returns the max working hours which is 8 
         }else{
             return hoursWorked;
         }
@@ -276,7 +281,7 @@ public class Milestone2 {
                 
                     br.readLine();
                 // Added to skip the header values
-
+     
                     while ((column = br.readLine()) != null) {
                         String[] values = column.split(delimiter);
                    
@@ -300,6 +305,7 @@ public class Milestone2 {
                                     secondGrossSalary = secondHalf * Double.valueOf(getRate(employeeNumber));
                                     grossSalary = firstGrossSalary + secondGrossSalary;
                                     totalDeductions = (getSSS(grossSalary) + getPhilHealth(grossSalary) + getPagIbig(grossSalary) + getWithholdingTax(grossSalary));
+                                    System.out.println("**************************************\n");
                                     System.out.println(readEmployeeData(employeeNumber) + "Cutoff Date: " + Month.of(monthCount) + " 1 to " + Month.of(monthCount)+" 15\n" + "Total Hours Worked: " + firstHalf + "\n" + "Gross Salary: " + firstGrossSalary + "\n" + "Net Salary: "+ firstHalf * Double.valueOf(getRate(employeeNumber))+ "\n");
                                     System.out.println("Cutoff Date: " + Month.of(monthCount) + " 16 to " + Month.of(monthCount)+" "+ YearMonth.of(2024, monthCount).lengthOfMonth() +"\n" + "Total Hours Worked: " + secondHalf + "\n" + "Gross Salary: " +  secondGrossSalary + "\n" + "Each Decuction: \n" + "\tSSS: " + getSSS(grossSalary) + "\n" + "\tPhilHealth: " + getPhilHealth(grossSalary) + "\n" + "\tPag-IBIG: "+ getPagIbig(grossSalary)+ "\n" +"\tTax: "+ getWithholdingTax(grossSalary) +"\n"+ "Total Deductions: " + totalDeductions +"\n" + "Net Salary: " + (grossSalary - totalDeductions) + "\n");
                                     System.out.println("**************************************"); 
@@ -329,6 +335,7 @@ public class Milestone2 {
                 secondGrossSalary = secondHalf * Double.valueOf(getRate(employeeNumber));
                 grossSalary = firstGrossSalary + secondGrossSalary;
                 totalDeductions = (getSSS(grossSalary) + getPhilHealth(grossSalary) + getPagIbig(grossSalary) + getWithholdingTax(grossSalary));
+                System.out.println("**************************************\n");
                 System.out.println(readEmployeeData(String.valueOf(empCheck)) + "Cutoff Date: " + Month.of(monthCount) + " 1 to " + Month.of(monthCount)+" 15\n" + "Total Hours Worked: " + firstHalf + "\n" + "Gross Salary: " + firstGrossSalary + "\n" + "Net Salary: "+ firstHalf * Double.valueOf(getRate(String.valueOf(empCheck)))+ "\n");
                 System.out.println("Cutoff Date: " + Month.of(monthCount) + " 16 to " + Month.of(monthCount)+" "+ YearMonth.of(2024, monthCount).lengthOfMonth() +"\n" + "Total Hours Worked: " + secondHalf + "\n" + "Gross Salary: " +  secondGrossSalary + "\n" + "Each Decuction: \n" + "\tSSS: " + getSSS(grossSalary) + "\n" + "\tPhilHealth: " + getPhilHealth(grossSalary) + "\n" + "\tPag-IBIG: "+ getPagIbig(grossSalary) + "\n" +"\tTax: "+ getWithholdingTax(grossSalary) +"\n" + "Total Deductions: " + totalDeductions +"\n" + "Net Salary: " + (grossSalary - totalDeductions) + "\n");
                 System.out.println("**************************************");
@@ -359,8 +366,6 @@ public class Milestone2 {
             }
             
         }
-        
-        
         return contribution;
     }
     
@@ -370,21 +375,21 @@ public class Milestone2 {
             contribution = ((grossSalary * 0.03) / 2);
                 if (contribution > 1800){
                     contribution = (1800 / 2);
-                    return contribution;
+                    
                 }
-            return contribution;    
+                
         }
         if (grossSalary > 10000.01 && grossSalary < 59999.99){
             contribution = ((grossSalary *0.03)/ 2);
-            return contribution;
+            
         }
         if (grossSalary <= 10000 ){
             contribution = ((grossSalary * 0.03) / 2);
                 if (contribution > 300){
                     contribution = (300 / 2);
-                    return contribution;
+                    
                 }
-        return contribution;
+        
         }
         return contribution;
     }
@@ -394,10 +399,8 @@ public class Milestone2 {
         if (grossSalary > 1500){
             contribution = (grossSalary * 0.02);
             if (contribution > 100){
-                contribution = 100;
-                
-            }   
-            
+                contribution = 100;  
+            }    
         }
         if (grossSalary >= 1000 && grossSalary <= 1500){
             contribution = (grossSalary *0.02);
@@ -486,8 +489,6 @@ public class Milestone2 {
                                 switch (choiceEmployee){
                                     case "1" : 
                                         calculateSingleSalary();
-                                        
-                                      
                                         break;
                                         
                                     case "2" :
