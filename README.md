@@ -1,3 +1,3 @@
-## Milestone 2
+## **Milestone 2**
 
 Motor Ph Basic Payroll System
