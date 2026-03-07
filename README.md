@@ -26,7 +26,7 @@ Team Contribution:
 
 6 Employee detail screen- Katrina Carell Layug
 
-6.1 Develop employee detail screen- Keichelle Yasoña
+6.1 Develop employee detail screen- Katrina Carell Layug
 
 7 Cutoff Date & Deductions- Keichelle Yasoña
 
