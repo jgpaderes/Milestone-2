@@ -1,3 +1,30 @@
 ## **Milestone 2**
 
 Motor Ph Basic Payroll System
+
+Program Function:
+The system is a MotorPH payroll program that reads employee and attendance data from CSV files to compute payroll information. It allows users to log in either as an employee, who can view their personal information, or as payroll staff, who can process payroll for one employee or all employees.
+
+Our program calculates hours worked based on attendance records, separates them into two payroll cutoffs (1–15 and 16–end of the month), computes the gross salary using the employee’s hourly rate, and then deducts government contributions such as SSS, PhilHealth, Pag-IBIG, and withholding tax to determine the final net salary.
+
+Team Contribution:
+1 Requirement Finalization- Juan  Gabriel Paderes & Keichelle Yasoña
+1.1 Meet with the group for planning- Keichelle Yasoña
+2 Log-in & Authentication- Juan Gabriel Paderes
+2.1 Develop log-in functionality- Juan Gabriel Paderes
+3 Implement password authentication- Juan Gabriel Paderes
+4 Dashboard interface- Juan Gabriel Paderes
+5 Develop dashboard interface- Juan Gabriel Paderes
+6 Employee detail screen- Keichelle Yasoña
+6.1 Develop employee detail screen- Keichelle Yasoña
+7 Cutoff Date & Deductions- Keichelle Yasoña
+8 Exit program- Keichelle Yasoña
+9 Payroll System- Juan  Gabriel Paderes & Keichelle Yasoña
+9.1 Develop Payroll Management System- Juan  Gabriel Paderes & Keichelle Yasoña
+10 Intial testing- Juan  Gabriel Paderes & Keichelle Yasoña
+10.1 Final Testing and Review- Juan  Gabriel Paderes & Keichelle Yasoña
+11 Full system testing- 
+Project Plan- Keichelle Yasoña
+
+Project Plan:
+https://docs.google.com/spreadsheets/d/1MIQMJH0ssWdQh6hd9r4pphKoMBp5BF-ocaBjURpECzc/edit?usp=sharing
