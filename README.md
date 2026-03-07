@@ -20,11 +20,11 @@ Team Contribution:
 
 3 Implement password authentication- Juan Gabriel Paderes
 
-4 Dashboard interface- Juan Gabriel Paderes
+4 Dashboard interface- Jabez Anthony Mansueto
 
-5 Develop dashboard interface- Juan Gabriel Paderes
+5 Develop dashboard interface- Jabez Anthony Mansueto
 
-6 Employee detail screen- Keichelle Yasoña
+6 Employee detail screen- Katrina Carell Layug
 
 6.1 Develop employee detail screen- Keichelle Yasoña
 
@@ -32,15 +32,17 @@ Team Contribution:
 
 8 Exit program- Keichelle Yasoña
 
-9 Payroll System- Juan  Gabriel Paderes & Keichelle Yasoña
+9 Payroll System- Juan Gabriel Paderes, Keichelle Yasoña, Jabez Anthony Mansueto & Katrina Carell Layug
 
-9.1 Develop Payroll Management System- Juan  Gabriel Paderes & Keichelle Yasoña
+9.1 Develop Payroll Management System- Juan Gabriel Paderes, Keichelle Yasoña, Jabez Anthony Mansueto & Katrina Carell Layug
 
-10 Intial testing- Juan  Gabriel Paderes & Keichelle Yasoña
+10 Intial testing- Juan Gabriel Paderes, Keichelle Yasoña, Jabez Anthony Mansueto & Katrina Carell Layug
 
-10.1 Final Testing and Review- Juan  Gabriel Paderes & Keichelle Yasoña
+10.1 Final Testing and Review- Juan Gabriel Paderes, Keichelle Yasoña, Jabez Anthony Mansueto & Katrina Carell Layug
 
-11 Full system testing- Juan  Gabriel Paderes & Keichelle Yasoña
+11 Full system testing- Juan Gabriel Paderes, Keichelle Yasoña, Jabez Anthony Mansueto & Katrina Carell Layug
+
+Readme file- Keichelle Yasoña
 
 Project Plan- Keichelle Yasoña
 
