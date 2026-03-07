@@ -53,7 +53,7 @@ The system is a MotorPH payroll program that reads employee and attendance data 
 
 Our program calculates hours worked based on attendance records, separates them into two payroll cutoffs (1–15 and 16–end of the month), computes the gross salary using the employee’s hourly rate, and then deducts government contributions such as SSS, PhilHealth, Pag-IBIG, and withholding tax to determine the final net salary.
 
-Team Contribution:
+## Team Contribution:
 
 1 Requirement Finalization- Juan  Gabriel Paderes & Keichelle Yasoña
 
@@ -87,9 +87,11 @@ Team Contribution:
 
 11 Full system testing- Juan Gabriel Paderes, Keichelle Yasoña, Jabez Anthony Mansueto & Katrina Carell Layug
 
-Readme file- Keichelle Yasoña
+Readme file- Keichelle Yasoña & Jabez Anthony Mansueto III
 
-Project Plan- Keichelle Yasoña & Jabez Anthony Mansueto III
+## Project Plan
 
-Project Plan Link:
+Project Plan- Keichelle Yasoña
+
+Project Plan Link- 
 https://docs.google.com/spreadsheets/d/1MIQMJH0ssWdQh6hd9r4pphKoMBp5BF-ocaBjURpECzc/edit?usp=sharing
