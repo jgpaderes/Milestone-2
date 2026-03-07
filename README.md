@@ -44,6 +44,5 @@ Team Contribution:
 
 Project Plan- Keichelle Yasoña
 
-Project Plan:
-
+Project Plan Link:
 https://docs.google.com/spreadsheets/d/1MIQMJH0ssWdQh6hd9r4pphKoMBp5BF-ocaBjURpECzc/edit?usp=sharing
