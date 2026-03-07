@@ -1,8 +1,53 @@
-## **Milestone 2**
+# Milestone 2: Motor Ph Basic payroll system
 
-Motor Ph Basic Payroll System
+Motor Ph Basic payroll system This Java application manages employee records and attendance data by reading from local CSV files and displaying payroll information via the console.
 
-Program Function:
+## Repository Structure
+The project is organized into the following directory structure:
+
+* **src/milestone/pkg2/**: Contains the main application logic in `Milestone2.java`.
+* **src/Resources/**: Contains the data source files used by the program:
+    * `EmployeeData.csv` — Stores employee details.
+    * `AttendanceData.csv` — Stores login and logout records.
+* **nbproject/**: Contains NetBeans project configuration and metadata.
+
+## Program Functionality
+Based on the source code in `Milestone2.java`, the system performs the following tasks:
+
+### 1. Employee Data Retrieval (getEmployeeData)
+The program reads `EmployeeData.csv` using a `BufferedReader`.
+* It uses a comma (`,`) as a delimiter to split data into an array.
+* It searches for a matching Employee Number.
+* **Output:** If found, it prints the Employee Number, Name (First and Last), and Birthday inside a formatted block.
+* **Error Handling:** If the ID does not exist, it displays: `"Employee does not exist."`.
+
+### 2. Salary Calculation (calculateSingleSalary)
+The program accesses `src/Resources/AttendanceData.csv`.
+* It uses `DateTimeFormatter` with the pattern `"H:mm"` to parse attendance times.
+* It prompts the user with `"Input Employee No: "` using a `Scanner`.
+* **Tracking:** It initializes variables to track `firstHalf` and `secondHalf` of the month (beginning at `monthCount = 6`).
+* **Calculations:** The method includes variables for `grossSalary`, `totalDeductions`, and `netSalary` to be processed per employee.
+
+
+## How to Run and Test 
+
+**Clone the repository:**
+
+```bash
+git clone https://github.com/jgpaderes/Milestone-2.git
+```
+
+**Environment**: Open the project in NetBeans IDE.
+
+**Execution**:
+
+Ensure the CSV files remain in the src/Resources/ directory.
+
+Run Milestone2.java.
+
+Enter a valid Employee Number from your EmployeeData.csv when prompted in the console.
+
+Program Function Summary:
 
 The system is a MotorPH payroll program that reads employee and attendance data from CSV files to compute payroll information. It allows users to log in either as an employee, who can view their personal information, or as payroll staff, who can process payroll for one employee or all employees.
 
@@ -44,7 +89,7 @@ Team Contribution:
 
 Readme file- Keichelle Yasoña
 
-Project Plan- Keichelle Yasoña
+Project Plan- Keichelle Yasoña & Jabez Anthony Mansueto III
 
 Project Plan Link:
 https://docs.google.com/spreadsheets/d/1MIQMJH0ssWdQh6hd9r4pphKoMBp5BF-ocaBjURpECzc/edit?usp=sharing
