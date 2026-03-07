@@ -20,9 +20,9 @@ Team Contribution:
 
 3 Implement password authentication- Juan Gabriel Paderes
 
-4 Dashboard interface- Jabez Anthony Mansueto
+4 Dashboard interface- Jabez Anthony Mansueto III
 
-5 Develop dashboard interface- Jabez Anthony Mansueto
+5 Develop dashboard interface- Jabez Anthony Mansueto III
 
 6 Employee detail screen- Katrina Carell Layug
 
