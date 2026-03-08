@@ -7,8 +7,10 @@ package milestone.pkg2;
 /**
  *
  * @authors 
- * Paderes, Juan Gabriel --- jgpaderes
- * Yasoña, Keichelle     --- Keichelle
+ * Paderes, Juan Gabriel   --- jgpaderes
+ * Yasoña, Keichelle       --- Keichelle
+ * Mansueto, Jabez Anthony --- JabezAnthony
+ * Layug, Katrina Carell   --- katlayug
  * 
  */
 import java.io.BufferedReader;
@@ -20,78 +22,47 @@ import java.time.YearMonth;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.Duration;
+import java.util.HashMap;
+
 
 public class Milestone2 {
+    
+    static HashMap<String, String[]> dataStorage = new HashMap<>();
+    // Initializes a Hashmap to store the employee data.
 
     public static void getEmployeeData(){
-            String filePath = "src/Resources/EmployeeData.csv";
-            String column;
-            String delimiter = ",";
             boolean checker = false;
-            
-            
             Scanner input = new Scanner(System.in);
-
-            System.out.print("Input Employee No: ");
-
+        
+            System.out.print("Enter your Employee Number: ");
             String employeeNumber = input.nextLine();
-
-            try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            
+            String[] tempArray = dataStorage.get(employeeNumber);
+               
+                for (String empNum : dataStorage.keySet()) {
                 
-                br.readLine();
-                // Added to skip the header values
-                while ((column = br.readLine()) != null) {
-                    String[] values = column.split(delimiter);
-                    
-                    
-                    String[] employeeInfo;
-                    employeeInfo = new String[4];
-                    // Initiates an array to fill in the necessary info (Employee Number, Employee Name, and Birthday)
-                    int i = 0;
-   
-                    if (values[0].equals(employeeNumber)){ 
-                        checker = true;    
-                        // Add a checker value that returns true if the Employee number is found
-                        
-                        for (String data : values){
-          
-                            employeeInfo[i] = data;   
-                            i++;
-                            if (i == 4){
-                                System.out.println("************************************** \n"); 
-                                System.out.println("Employee Number: " + employeeInfo[0] +"\n" + "Employee Name: " + employeeInfo[1] + ", " + employeeInfo[2] + "\n" + "Birthday: " + employeeInfo[3] + "\n");
-                                System.out.println("**************************************");   
-                                break;
-                            }                
-                        }     
-                    }
+                    if (empNum.equals(employeeNumber)){
+                        checker = true;
+                        System.out.println("************************************** \n"); 
+                        System.out.println("Employee Number: " + empNum +"\n" + "Employee Name: " + tempArray[0] + "\n" + "Birthday: " + tempArray[1] + "\n");
+                        System.out.println("**************************************"); 
+                        break;
+                    }       
                 }
                 if (checker != true){
-                    System.out.println("Employee does not exist.");
-                    // Checks the checker value if the Employee Number exists
+                    System.out.println("Employee Number does not exist!");
                 }
-            } catch (IOException e) {
-                System.out.println("An error occurred while reading the file.");
-            }
     }
-    public static void calculateSingleSalary(){
-        String filePath = "src/Resources/AttendanceData.csv";
+    public static void getSingleSalary(String employeeNumber){
+            String filePath = "src/Resources/AttendanceData.csv";
             String column;
             String delimiter = ",";
             DateTimeFormatter format = DateTimeFormatter.ofPattern("H:mm");
             boolean checker = false;
             double firstHalf = 0;
             double secondHalf = 0; 
-            double firstGrossSalary;
-            double secondGrossSalary;
-            double grossSalary;
-            double totalDeductions;
             int monthCount = 6;
-            Scanner input = new Scanner(System.in);
 
-            System.out.print("Input Employee No: ");
-
-            String employeeNumber = input.nextLine();
             
             try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
                 
@@ -114,15 +85,7 @@ public class Milestone2 {
                         if (monthCount <= 12){
                             
                             if (monthCount != monthNo){ 
-                                firstGrossSalary = firstHalf * Double.parseDouble(getRate(employeeNumber));
-                                secondGrossSalary = secondHalf * Double.parseDouble(getRate(employeeNumber));
-                                grossSalary = firstGrossSalary + secondGrossSalary;
-                                totalDeductions = (getSSS(grossSalary) + getPhilHealth(grossSalary) + getPagIbig(grossSalary) + getWithholdingTax(grossSalary));
-                                System.out.println("**************************************\n");
-                                System.out.println(readEmployeeData(employeeNumber) + "Cutoff Date: " + Month.of(monthCount) + " 1 to " + Month.of(monthCount)+" 15\n" + "Total Hours Worked: " + firstHalf + "\n" + "Gross Salary: " + firstGrossSalary + "\n" + "Net Salary: "+ firstHalf * Double.parseDouble(getRate(employeeNumber))+ "\n");
-                                System.out.println("Cutoff Date: " + Month.of(monthCount) + " 16 to " + Month.of(monthCount)+" "+ YearMonth.of(2024, monthCount).lengthOfMonth() +"\n" + "Total Hours Worked: " + secondHalf + "\n" + "Gross Salary: " +  secondGrossSalary + "\n" + "Each Decuction: \n" + "\tSSS: " + getSSS(grossSalary) + "\n" + "\tPhilHealth: " + getPhilHealth(grossSalary) + "\n" + "\tPag-IBIG: "+ getPagIbig(grossSalary) + "\n" + "\tTax: " + getWithholdingTax(grossSalary) + "\n" + "Total Deductions: " + totalDeductions + "\n" + "Net Salary: " + (grossSalary - totalDeductions) + "\n");
-                                System.out.println("**************************************"); 
-                                
+                                printPayroll(firstHalf,secondHalf,employeeNumber,monthCount);
                                 // Prints payroll summary at the end of each month
                                 monthCount++;
                                 firstHalf = 0;
@@ -139,63 +102,38 @@ public class Milestone2 {
                                     secondHalf += hours;
                             }
                         }
-                    }    
-                
-                    
+                    }         
                 }
                 if (checker != true){
-                    System.out.println("Employee does not exist.");
+                    System.out.println("Employee Number does not exist.");
                     return;
                     // Checks the checker value if the Employee Number exists. If not, ends the loop.
 
                 }
-                firstGrossSalary = firstHalf * Double.parseDouble(getRate(employeeNumber));
-                secondGrossSalary = secondHalf * Double.parseDouble(getRate(employeeNumber));
-                grossSalary = firstGrossSalary + secondGrossSalary;
-                totalDeductions = (getSSS(grossSalary) + getPhilHealth(grossSalary) + getPagIbig(grossSalary) + getWithholdingTax(grossSalary));
-                System.out.println("**************************************\n");
-                System.out.println(readEmployeeData(employeeNumber) + "Cutoff Date: " + Month.of(monthCount) + " 1 to " + Month.of(monthCount)+" 15\n" + "Total Hours Worked: " + firstHalf + "\n" + "Gross Salary: " + firstGrossSalary + "\n" + "Net Salary: "+ firstHalf * Double.parseDouble(getRate(employeeNumber))+ "\n");
-                System.out.println("Cutoff Date: " + Month.of(monthCount) + " 16 to " + Month.of(monthCount)+" "+ YearMonth.of(2024, monthCount).lengthOfMonth() +"\n" + "Total Hours Worked: " + secondHalf + "\n" + "Gross Salary: " +  secondGrossSalary + "\n" + "Each Decuction: \n" + "\tSSS: " + getSSS(grossSalary) + "\n" + "\tPhilHealth: " + getPhilHealth(grossSalary) + "\n" + "\tPag-IBIG: "+ getPagIbig(grossSalary) + "\n" +"\tTax: "+ getWithholdingTax(grossSalary) + "\n" + "Total Deductions: " + totalDeductions +"\n" + "Net Salary: " + (grossSalary - totalDeductions) + "\n");
-                System.out.println("**************************************");
-                // placed outside the while loop to catch December as the loop stops after reading the last item in the CSV
-                
-                
-                    
-                
+                printPayroll(firstHalf,secondHalf,employeeNumber,monthCount);
+                // Repeated outside the while loop to catch December as the loop stops after reading the last item in the CSV
+
             } catch (IOException e) {
                 System.out.println("An error occurred while reading the file.");
             }
-            
-    
      } 
     public static String getRate(String employeeNumber){
-            String filePath = "src/Resources/EmployeeData.csv";
-            String column;
-            String delimiter = ",";
-            String rate = null; 
-            try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String[] tempArray = dataStorage.get(employeeNumber);
+            String rate = null;
+                for (String empNum : dataStorage.keySet()) {
                 
-                br.readLine();
-                // Added to skip the header values
-                while ((column = br.readLine()) != null) {
-                    String[] values = column.split(delimiter);
-                    
-
-                    if (values[0].equals(employeeNumber)){ 
-                        int len = values.length;
-                        rate = values[len-1];
+                    if (empNum.equals(employeeNumber)){
+                        rate = tempArray[2]; 
                     }
                 }
-            } catch (IOException e) {
-                System.out.println("An error occurred while reading the file.");
-            }
         return rate;
-         // Checks the last in the line which holds the hourly rate and returns it.
+        // Gets the array from the hashmap (dataStorage) based on the key (employeeNumber). Returns the 3rd values in the array which is the rate
     }
+    
     public static double getHours(LocalTime logIn, LocalTime logOut){
-        LocalTime gracePeriod = LocalTime.of(8,10);
+        LocalTime gracePeriod = LocalTime.of(8,5);
         LocalTime cutOff = LocalTime.of(17,0);
-        
+        // Adds a grace period time of 8:05 and a cutoff time of 17:00.
         if(logOut.isAfter(cutOff)){
             logOut = cutOff;
         }    
@@ -203,9 +141,9 @@ public class Milestone2 {
             logIn = LocalTime.of(8,0);
         
         }
-        Duration difference = Duration.between(logIn,logOut);
-        double diffHours = difference.toHours();      
-        double diffMinutes = difference.toMinutes() % 60;
+        Duration timeDifference = Duration.between(logIn,logOut);
+        double diffHours = timeDifference.toHours();      
+        double diffMinutes = timeDifference.toMinutes() % 60;
         double hoursWorked = (diffHours + (diffMinutes / 60));
         // Reads the difference in duration in H : mm then converts the mm value to decimal 
         
@@ -217,52 +155,39 @@ public class Milestone2 {
         if ( hoursWorked > 8.0){
             hoursWorked = 8.0;
             return hoursWorked;
-            // checks for overtime, returns the max working hours which is 8 
+            // Checks for overtime, if it happens, returns the max working hours which is 8.
         }else{
             return hoursWorked;
         }
     }
-    public static String readEmployeeData(String employeeNumber){
+    public static void storeEmployeeData(){
+   
             String filePath = "src/Resources/EmployeeData.csv";
             String column;
             String delimiter = ",";
 
             try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-                
-                br.readLine();
+
+            br.readLine();
                 // Added to skip the header values
+
                 while ((column = br.readLine()) != null) {
+
                     String[] values = column.split(delimiter);
-                    
-                    
-                    String[] employeeInfo;
-                    employeeInfo = new String[4];
-                    // Initiates an array to fill in the necessary info
-                    int i = 0;
-   
-                    if (values[0].equals(employeeNumber)){ 
-                          
-                    
-                        for (String data : values){
-                            
-                            employeeInfo[i] = data;   
-                            i++;
-                            if (i == 4){
-                                 
-                                System.out.println("Employee Number: " + employeeInfo[0] +"\n" + "Employee Name: " + employeeInfo[1] + ", " + employeeInfo[2] + "\n" + "Birthday: " + employeeInfo[3] + "\n");
-                                break;
-                            }                
-                        }     
-                    }
-                }
-            
-            } catch (IOException e) {
-                System.out.println("An error occurred while reading the file.");
+                    int len = values.length;
+                    String empNumber = values[0];
+                    String name = (values[1] +", "+ values[2]);
+                    String birthday = values[3];
+                    String rate = values[len-1];
+
+                dataStorage.put(empNumber, new String[]{name, birthday, rate});
             }
-        return "";
-    }
-    public static void calculateAllSalary(){
-        String filePath = "src/Resources/AttendanceData.csv";
+
+        } catch (IOException e) {   
+        }    
+    }     
+    public static void getAllSalary(){
+            String filePath = "src/Resources/AttendanceData.csv";
             String column;
             String delimiter = ",";
             DateTimeFormatter format = DateTimeFormatter.ofPattern("H:mm");
@@ -276,10 +201,6 @@ public class Milestone2 {
                 // Used Do-while loop to force the loop to run once and get the last ID value
                 double firstHalf = 0;
                 double secondHalf = 0;
-                double firstGrossSalary;
-                double secondGrossSalary;
-                double grossSalary;
-                double totalDeductions;
                 int monthCount = 6;
                 try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
                 
@@ -305,15 +226,7 @@ public class Milestone2 {
                             if (monthCount <= 12){
                             
                                 if (monthCount != monthNo){  
-                                    firstGrossSalary = firstHalf * Double.parseDouble(getRate(employeeNumber));
-                                    secondGrossSalary = secondHalf * Double.parseDouble(getRate(employeeNumber));
-                                    grossSalary = firstGrossSalary + secondGrossSalary;
-                                    totalDeductions = (getSSS(grossSalary) + getPhilHealth(grossSalary) + getPagIbig(grossSalary) + getWithholdingTax(grossSalary));
-                                    System.out.println("**************************************\n");
-                                    System.out.println(readEmployeeData(employeeNumber) + "Cutoff Date: " + Month.of(monthCount) + " 1 to " + Month.of(monthCount)+" 15\n" + "Total Hours Worked: " + firstHalf + "\n" + "Gross Salary: " + firstGrossSalary + "\n" + "Net Salary: "+ firstHalf * Double.parseDouble(getRate(employeeNumber))+ "\n");
-                                    System.out.println("Cutoff Date: " + Month.of(monthCount) + " 16 to " + Month.of(monthCount)+" "+ YearMonth.of(2024, monthCount).lengthOfMonth() +"\n" + "Total Hours Worked: " + secondHalf + "\n" + "Gross Salary: " +  secondGrossSalary + "\n" + "Each Decuction: \n" + "\tSSS: " + getSSS(grossSalary) + "\n" + "\tPhilHealth: " + getPhilHealth(grossSalary) + "\n" + "\tPag-IBIG: "+ getPagIbig(grossSalary)+ "\n" +"\tTax: "+ getWithholdingTax(grossSalary) +"\n"+ "Total Deductions: " + totalDeductions +"\n" + "Net Salary: " + (grossSalary - totalDeductions) + "\n");
-                                    System.out.println("**************************************"); 
-                                
+                                    printPayroll(firstHalf,secondHalf,employeeNumber,monthCount);
                                     // Checks for unequal months to know to print the payroll summary at the end of each month
                                     monthCount++;
                                     firstHalf = 0;
@@ -333,22 +246,13 @@ public class Milestone2 {
                             }    
                         }
                     lastId = values[0];      
-                    // Gets the last Employee number from the list
+                    // Gets the last Employee number from the list to use as an end case for the while loop.
                 }
-                firstGrossSalary = firstHalf * Double.parseDouble(getRate(employeeNumber));
-                secondGrossSalary = secondHalf * Double.parseDouble(getRate(employeeNumber));
-                grossSalary = firstGrossSalary + secondGrossSalary;
-                totalDeductions = (getSSS(grossSalary) + getPhilHealth(grossSalary) + getPagIbig(grossSalary) + getWithholdingTax(grossSalary));
-                System.out.println("**************************************\n");
-                System.out.println(readEmployeeData(String.valueOf(empCheck)) + "Cutoff Date: " + Month.of(monthCount) + " 1 to " + Month.of(monthCount)+" 15\n" + "Total Hours Worked: " + firstHalf + "\n" + "Gross Salary: " + firstGrossSalary + "\n" + "Net Salary: "+ firstHalf * Double.parseDouble(getRate(String.valueOf(empCheck)))+ "\n");
-                System.out.println("Cutoff Date: " + Month.of(monthCount) + " 16 to " + Month.of(monthCount)+" "+ YearMonth.of(2024, monthCount).lengthOfMonth() +"\n" + "Total Hours Worked: " + secondHalf + "\n" + "Gross Salary: " +  secondGrossSalary + "\n" + "Each Decuction: \n" + "\tSSS: " + getSSS(grossSalary) + "\n" + "\tPhilHealth: " + getPhilHealth(grossSalary) + "\n" + "\tPag-IBIG: "+ getPagIbig(grossSalary) + "\n" +"\tTax: "+ getWithholdingTax(grossSalary) +"\n" + "Total Deductions: " + totalDeductions +"\n" + "Net Salary: " + (grossSalary - totalDeductions) + "\n");
-                System.out.println("**************************************");
+                printPayroll(firstHalf,secondHalf,employeeNumber,monthCount);
                 empCheck += 1;
                 
-                // Placed outside the while loop to catch December as the loop stops after reading the last item in the CSV
-                
-                
-                
+                // Repeated outside the while loop to catch December as the loop stops after reading the last item in the CSV
+ 
             } catch (IOException e) {
                 System.out.println("An error occurred while reading the file.");
             }
@@ -367,8 +271,8 @@ public class Milestone2 {
             else{
                 baseRange += 500;
                 contribution += 22.50;
-            }
-            
+                // Uses the constant difference between the value range and contribution amount to add it to itself until the value cap is reached.
+            }  
         }
         return contribution;
     }
@@ -432,12 +336,61 @@ public class Milestone2 {
         if (grossSalary <= 20832){
             return contribution;
         }
-                    
-        
+
         return contribution;
+    }
+    public static void readEmployeeData(String employeeNumber){
+                
+                String[] tempArray = dataStorage.get(employeeNumber);
+                for (String empNum : dataStorage.keySet()) {
+                
+                    if (empNum.equals(employeeNumber)){
+                       
+                        System.out.println("Employee Number: " + empNum +"\n" + "Employee Name: " + tempArray[0] + "\n" + "Birthday: " + tempArray[1] + "\n");
+                    }
+        }
+    }
+    public static double firstGrossSalary(double firstHalf, String employeeNumber){
+        return firstHalf * Double.parseDouble(getRate(employeeNumber));
+    }
+    public static double secondGrossSalary(double secondHalf, String employeeNumber){
+        return secondHalf * Double.parseDouble(getRate(employeeNumber));
+    }
+    
+    public static double grossSalary(double firstGrossSalary, double secondGrossSalary){
+
+            return firstGrossSalary + secondGrossSalary;
+    }
+    public static double totalDeductions(double grossSalary, double firstHalf, double secondHalf, String employeeNumber){
+        return getSSS(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber))) +
+               getPhilHealth(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)))+
+               getPagIbig(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)))+
+               getWithholdingTax(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)));
+    }
+    public static void printPayroll(double firstHalf, double secondHalf, String employeeNumber, int monthCount){
+            System.out.println("**************************************\n");
+            readEmployeeData(String.valueOf(employeeNumber));
+            // Prints the employee data based on the employee number.
+            System.out.println("Cutoff Date: " + Month.of(monthCount) + " 1 to " + Month.of(monthCount)+" 15");
+            System.out.println("Total Hours Worked: " + firstHalf);
+            System.out.println("Gross Salary: " + firstGrossSalary(firstHalf,employeeNumber));
+            System.out.println("Net Salary: "+ firstGrossSalary(firstHalf,employeeNumber));
+            System.out.println("Cutoff Date: " + Month.of(monthCount) + " 16 to " + Month.of(monthCount)+" "+ YearMonth.of(2024, monthCount).lengthOfMonth());
+            System.out.println("Total Hours Worked: " + secondHalf);
+            System.out.println("Gross Salary: " +  secondGrossSalary(secondHalf,employeeNumber));
+            System.out.println("Each Decuction:");
+            System.out.println("\tSSS: " + getSSS(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber))));
+            System.out.println("\tPhilHealth: " + getPhilHealth(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber))));
+            System.out.println("\tPag-IBIG: "+ getPagIbig(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber))));
+            System.out.println("\tTax: "+ getWithholdingTax(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber))));
+            System.out.println("Total Deductions: " + totalDeductions(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)), firstHalf, secondHalf, employeeNumber));
+            System.out.println("Net Salary: " + (grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)) - totalDeductions(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)), firstHalf, secondHalf, employeeNumber)));
+            System.out.println("\n**************************************");
     }
     
     public static void main(String[] args){
+        storeEmployeeData();
+        // Reads the employee data once and stores the needed information.
       
         Scanner input = new Scanner(System.in);
         
@@ -445,7 +398,7 @@ public class Milestone2 {
         String workerType = input.nextLine();
         
         
-        if(null == workerType){
+        if(workerType.isEmpty()){
             System.out.println("Invalid Username!");
           
         }else{
@@ -457,7 +410,7 @@ public class Milestone2 {
                         getEmployeeData();
                         break;
                     }else{
-                        System.out.println("Invalid Password!");
+                        System.out.println("Incorrect username and/or password.");
                         break;
                     }                     
                 case "payroll_staff":                  
@@ -465,8 +418,8 @@ public class Milestone2 {
                     String payrollPassword = input.nextLine();
                     if("12345".equals(payrollPassword)){
                         System.out.println("************************************** \n"); 
-                        System.out.println("1. Process Payroll");
-                        System.out.println("2. Exit the Program\n");
+                        System.out.println("[1]. Process Payroll");
+                        System.out.println("[2]. Exit the Program\n");
                         System.out.println("**************************************");
                         
                         System.out.print("What do you want to do? ");
@@ -475,9 +428,9 @@ public class Milestone2 {
                         switch (choicePayroll){
                             case "1" : 
                                 System.out.println("************************************** \n"); 
-                                System.out.println("1. One employee");
-                                System.out.println("2. All Employees");
-                                System.out.println("3. Exit the Program\n");
+                                System.out.println("[1]. One employee");
+                                System.out.println("[2]. All Employees");
+                                System.out.println("[3]. Exit the Program\n");
                                 System.out.println("**************************************");
                                 
                                 System.out.print("How many do you want to process? ");
@@ -485,11 +438,31 @@ public class Milestone2 {
                                 
                                 switch (choiceEmployee){
                                     case "1" : 
-                                        calculateSingleSalary();
+                                        System.out.println("************************************** \n"); 
+                                        System.out.println("[1]. Enter the Employee Number.");
+                                        System.out.println("[2]. Exit the Program\n");
+                                        System.out.println("**************************************");
+                                        System.out.print("What do you want to do? ");
+                                        String choice = input.nextLine();
+
+                                        switch (choice){
+                                            
+                                            case "1" :
+                                                Scanner empInput = new Scanner(System.in);   
+                                                System.out.print("Input Employee No: ");
+                                                String employeeNumber = empInput.nextLine();
+                                                getSingleSalary(employeeNumber);
+                                                break;
+                                                
+                                            case "2" :
+                                                System.exit(0);     
+                                        default : 
+                                            System.out.println("Invalid Input!");
+                                            break;
+                                        }    
                                         break;
-                                        
                                     case "2" :
-                                        calculateAllSalary();
+                                        getAllSalary();
                                         break;
                                         
                                     case "3" : 
@@ -509,11 +482,11 @@ public class Milestone2 {
     
                         break;
                     }else{
-                        System.out.println("Invalid Password!");   
+                        System.out.println("Incorrect username and/or password.");   
                         break;
                     }
                 default: 
-                    System.out.println("Invalid Username!");
+                    System.out.println("Incorrect username and/or password.");
             }
         } 
     } 
