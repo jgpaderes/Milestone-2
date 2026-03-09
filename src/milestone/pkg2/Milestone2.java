@@ -448,7 +448,10 @@ public class Milestone2 {
                                     System.out.println("Invalid Input!");
                                     break;
                             } 
-                            
+                        /* If the input is employee and the password is correct, gives the choice for the employee number input or to exit the program. 
+                         * If the employee number is correct, proceeds with getting the employee data with (getEmployeeData(employeeNumber)).  
+                         * Exits if the input is none of the given choices, if case 2 is chosen,and if the employee number is incorrect. 
+                         */
                           
                     }else{
                         System.out.println("Incorrect username and/or password.");
@@ -464,6 +467,10 @@ public class Milestone2 {
                         System.out.print("What do you want to do? ");
                         String choicePayroll = input.nextLine();
                         
+                        /* If the input is payroll_staff and the password is correct, gives the choice for processing the payroll or to exit the program. 
+                         * Exits if the input is none of the given choices,and if case 2 is chosen.
+                         */
+                        
                         switch (choicePayroll){
                             case "1" : 
                                 System.out.println("************************************** \n"); 
@@ -474,6 +481,10 @@ public class Milestone2 {
                                 
                                 System.out.print("How many do you want to process? ");
                                 String choiceEmployee = input.nextLine();
+                                /*  
+                                *    If process payroll is chosen, gives the choice to process [1] one or [2] all employees.
+                                *   Exits if [3] is chosen or if the input are non of the given choices.
+                                */
                                 
                                 switch (choiceEmployee){
                                     case "1" : 
@@ -483,6 +494,10 @@ public class Milestone2 {
                                         System.out.println("**************************************");
                                         System.out.print("What do you want to do? ");
                                         String choice = input.nextLine();
+                                        /*  
+                                        *    If one employee is chosen, [1] asks for the employee number
+                                        *   Exits the program if [2] is chosen or if the input is not one of the given. 
+                                        */
 
                                         switch (choice){
                                             
@@ -492,41 +507,54 @@ public class Milestone2 {
                                                 String employeeNumber = empInput.nextLine();
                                                 getSingleSalary(employeeNumber);
                                                 break;
+                                                /*
+                                                    Asks for employee number input and passes the number to the getSingleSalary() method in order to get the payroll info.
+                                                */
                                                 
                                             case "2" :
                                                 System.exit(0);     
+                                                // Choice for an exit clause if needed.
                                         default : 
                                             System.out.println("Invalid Input!");
                                             break;
+                                            // Terminates the program if the the input is not from the choices.
                                         }    
                                         break;
+                                        
                                     case "2" :
                                         getAllSalary();
                                         break;
-                                        
+                                        /*
+                                            If [2] is chosen, calls the getAllSalary() method in order to print all the payroll information 
+                                        */
                                     case "3" : 
-                                        break;
+                                        System.exit(0);
+                                         // Choice for an exit clause if needed.
                                         
                                     default : 
                                         System.out.println("Invalid Input!");  
+                                        // Terminates the program if the the input is not from the choices.
                                 }
                                 break;
                             
                             case "2" :
-                                break;
+                                System.exit(0);
                              
                             default: 
                                 System.out.println("Invalid Input!");             
                         }   
     
                         break;
+                        
                     }else{
                         System.out.println("Incorrect username and/or password.");   
                         break;
+                        // Terminates the program if one or both the password and username are incorrect.
                     }
                 default: 
                     System.out.println("Incorrect username and/or password.");
-            }
+                    // Terminates the program if one or both the password and username are incorrect.
+            }       
         } 
     } 
 }  
