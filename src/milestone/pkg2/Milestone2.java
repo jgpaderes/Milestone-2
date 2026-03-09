@@ -252,9 +252,9 @@ public class Milestone2 {
             }
             if (grossSalary <= 10000 ){
                 philHealthContribution = ((grossSalary * 0.03) / 2);
-                    if (philHealthContribution > 300){
-                        philHealthContribution = (300 / 2);
-                    }
+                if (philHealthContribution > 300){
+                    philHealthContribution = (300 / 2);
+                }
             }
             return philHealthContribution;
             // Takes a grossSalary value to use for the computation of the PhilHealth dedcution.
@@ -478,8 +478,10 @@ public class Milestone2 {
                         System.out.println("Incorrect username and/or password.");
                         break;
                     }                     
-                case "payroll_staff":                  
+                case "payroll_staff":     
+                    
                     if("12345".equals(password)){
+                        
                         do{
                         
                         System.out.println("************************************** \n"); 
@@ -579,8 +581,8 @@ public class Milestone2 {
                                 System.out.println("\n-- Invalid Input! --");
                                 repeat = true;
                                 break;
-                        }    
-                    }while (repeat);
+                            }    
+                        }while (repeat);
                         
                         
                     }else{
