@@ -30,14 +30,9 @@ public class Milestone2 {
     static HashMap<String, String[]> dataStorage = new HashMap<>();
     // Initializes a Hashmap to store the necessary employee data.
 
-    public static void getEmployeeData(){
+    public static void getEmployeeData(String employeeNumber){
             boolean checker = false;
-            Scanner input = new Scanner(System.in);
-        
-            System.out.print("Enter your Employee Number: ");
-            String employeeNumber = input.nextLine();
-            
-               
+
                 for (String empNum : dataStorage.keySet()) {
                     // Checks the keys of the array (employee number) which connects to the array that holds the employee data.
                     String[] tempArray = dataStorage.get(empNum);
@@ -57,7 +52,7 @@ public class Milestone2 {
     }
     public static void getSingleSalary(String employeeNumber){
             String filePath = "src/Resources/AttendanceData.csv";
-            String column;
+            String row;
             String delimiter = ",";
             DateTimeFormatter format = DateTimeFormatter.ofPattern("H:mm");
             boolean checker = false;
@@ -70,8 +65,8 @@ public class Milestone2 {
                 
                 br.readLine();
                 // Added to skip the header values
-                while ((column = br.readLine()) != null) {
-                    String[] values = column.split(delimiter);
+                while ((row = br.readLine()) != null) {
+                    String[] values = row.split(delimiter);
                    
                     
                     if (values[0].equals(employeeNumber)){
@@ -169,7 +164,7 @@ public class Milestone2 {
     public static void storeEmployeeData(){
    
             String filePath = "src/Resources/EmployeeData.csv";
-            String column;
+            String row;
             String delimiter = ",";
 
             try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -177,9 +172,9 @@ public class Milestone2 {
                 br.readLine();
                 // Added to skip the header values
 
-                while ((column = br.readLine()) != null) {
+                while ((row = br.readLine()) != null) {
 
-                    String[] values = column.split(delimiter);
+                    String[] values = row.split(delimiter);
                     int len = values.length;
                     String empNumber = values[0];
                     String name = (values[1] +", "+ values[2]);
@@ -196,7 +191,7 @@ public class Milestone2 {
     }     
     public static void getAllSalary(){
             String filePath = "src/Resources/AttendanceData.csv";
-            String column;
+            String row;
             String delimiter = ",";
             DateTimeFormatter format = DateTimeFormatter.ofPattern("H:mm");
              
@@ -215,8 +210,8 @@ public class Milestone2 {
                     br.readLine();
                 // Added to skip the header values
      
-                    while ((column = br.readLine()) != null) {
-                        String[] values = column.split(delimiter);
+                    while ((row = br.readLine()) != null) {
+                        String[] values = row.split(delimiter);
                    
                     
                         employeeNumber = values[0];
@@ -435,8 +430,26 @@ public class Milestone2 {
             switch (workerType) {
                 case "employee" :               
                     if("12345".equals(password)){
-                        getEmployeeData();
-                        break;
+                        System.out.println("************************************** \n"); 
+                        System.out.println("[1]. Enter your employee number");
+                        System.out.println("[2]. Exit the Program\n");
+                        System.out.println("**************************************");
+                        
+                        System.out.print("What do you want to do? ");
+                        String choiceEmployee = input.nextLine();
+                            switch (choiceEmployee){
+                                case "1" : 
+                                    System.out.print("Enter your employee number: ");
+                                    String employeeNumber = input.nextLine();
+                                    getEmployeeData(employeeNumber);
+                                case "2" :
+                                    System.exit(0);
+                                default: 
+                                    System.out.println("Invalid Input!");
+                                    break;
+                            } 
+                            
+                          
                     }else{
                         System.out.println("Incorrect username and/or password.");
                         break;
