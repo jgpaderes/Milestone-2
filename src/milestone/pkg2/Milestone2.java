@@ -162,10 +162,13 @@ public class Milestone2 {
     public static void getAllSalary(){
             DateTimeFormatter format = DateTimeFormatter.ofPattern("H:mm");  
             String employeeNumber = null;
-            int empCheck = 10001;
             String [] lastArray;
             String lastId;
-                 
+            String [] firstArray = attendanceStorage.get(0);
+            // Finds the first value array inside the ArrayList (attendanceStorage).
+            int empCheck = Integer.parseInt(firstArray[0]);   
+            // Gets the first value in the first array to use as a counter/checker value for the employee number.
+            
             do{
                 // Used Do-while loop to force the loop to run once and get the last ID value
                 double firstHalf = 0;
@@ -174,7 +177,8 @@ public class Milestone2 {
                 lastArray = attendanceStorage.get(attendanceStorage.size()- 1);
                 // Finds the last array inside the ArrayList (attendanceStorage).
                 lastId = lastArray[0];
-                // Gets the last value inside the last array to be used for the while conditional.
+                
+                // Gets the first value inside the last array to be used for the while conditional.
                 for (String row[] : attendanceStorage){
                    
                         employeeNumber = row[0];
@@ -200,11 +204,9 @@ public class Milestone2 {
                                 }   
                                 if(date <=15){
                                     firstHalf += hours;
-                                    
 
                                 }else{
                                     secondHalf += hours;
-                                    
                                 }
                             // Uses the variables "firstHalf" and "secondHalf" as a placholder variable to hold the hours value and add it to itself until the set cutoff date is reached.
 
