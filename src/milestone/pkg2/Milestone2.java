@@ -436,14 +436,18 @@ public class Milestone2 {
         String password = input.nextLine();
         
         // Asks for both username and password. If one or both are incorrect prints "Incorrect username and/or password" and exits the program.
-        
-        if(workerType.isEmpty()){
+        boolean repeat = false;
+        // Initializes a repeat as false in order to loop when inputs are invalid. 
+        if(workerType.isEmpty() || password.isEmpty()){
             System.out.println("Incorrect username and/or password.");     
           
         }else{
             switch (workerType) {
                 case "employee" :               
                     if("12345".equals(password)){
+                        
+                        do{
+                            
                         System.out.println("************************************** \n"); 
                         System.out.println("[1]. Enter your employee number");
                         System.out.println("[2]. Exit the Program\n");
@@ -459,12 +463,15 @@ public class Milestone2 {
                                 case "2" :
                                     System.exit(0);
                                 default: 
-                                    System.out.println("Invalid Input!");
+                                    System.out.println("\n-- Invalid Input! --");
+                                    repeat = true;
                                     break;
-                            } 
-                        /* If the input is employee and the password is correct, gives the choice for the employee number input or to exit the program. 
-                         * If the employee number is correct, proceeds with getting the employee data with (getEmployeeData(employeeNumber)).  
-                         * Exits if the input is none of the given choices, if case 2 is chosen,and if the employee number is incorrect. 
+                            }
+                        }while (repeat);
+                        /*  If the input is employee and the password is correct, gives the choice for the employee number input or to exit the program. 
+                         *  If the employee number is correct, proceeds with getting the employee data with (getEmployeeData(employeeNumber)).  
+                         *  If case 2 is chosen, exit the program
+                         *  If the input is none of the choices, repeats the query.
                          */
                           
                     }else{
@@ -473,6 +480,8 @@ public class Milestone2 {
                     }                     
                 case "payroll_staff":                  
                     if("12345".equals(password)){
+                        do{
+                        
                         System.out.println("************************************** \n"); 
                         System.out.println("[1]. Process Payroll");
                         System.out.println("[2]. Exit the Program\n");
@@ -481,12 +490,15 @@ public class Milestone2 {
                         System.out.print("What do you want to do? ");
                         String choicePayroll = input.nextLine();
                         
-                        /* If the input is payroll_staff and the password is correct, gives the choice for processing the payroll or to exit the program. 
-                         * Exits if the input is none of the given choices,and if case 2 is chosen.
+                        /*   If the input is payroll_staff and the password is correct, gives the choice for processing the payroll or to exit the program. 
+                         *   Exits if the input is none of the given choices,and if case 2 is chosen.
+                         *   If the input is none of the choices, repeats the query.
                          */
                         
                         switch (choicePayroll){
+                            
                             case "1" : 
+                                do{
                                 System.out.println("************************************** \n"); 
                                 System.out.println("[1]. One employee");
                                 System.out.println("[2]. All Employees");
@@ -497,11 +509,14 @@ public class Milestone2 {
                                 String choiceEmployee = input.nextLine();
                                 /*  
                                 *    If process payroll is chosen, gives the choice to process [1] one or [2] all employees.
-                                *   Exits if [3] is chosen or if the input are non of the given choices.
+                                *    If [3] is chosen exits the program. 
+                                *    If the input is none of the choices, repeats the query.
                                 */
                                 
                                 switch (choiceEmployee){
-                                    case "1" : 
+                                    case "1" :  
+                                        do{
+                                            
                                         System.out.println("************************************** \n"); 
                                         System.out.println("[1]. Enter the Employee Number.");
                                         System.out.println("[2]. Exit the Program\n");
@@ -510,17 +525,18 @@ public class Milestone2 {
                                         String choice = input.nextLine();
                                         /*  
                                         *    If one employee is chosen, [1] asks for the employee number
-                                        *   Exits the program if [2] is chosen or if the input is not one of the given. 
+                                        *    Exits the program if [2] is chosen 
+                                        *    If the input is none of the choices, repeats the query.   
                                         */
-
+                                       
                                         switch (choice){
                                             
                                             case "1" :
                                                 Scanner empInput = new Scanner(System.in);   
-                                                System.out.print("Input Employee No: ");
+                                                System.out.print("\nInput Employee No: ");
                                                 String employeeNumber = empInput.nextLine();
                                                 getSingleSalary(employeeNumber);
-                                                break;
+                                                return;
                                                 /*
                                                     Asks for employee number input and passes the number to the getSingleSalary() method in order to get the payroll info.
                                                 */
@@ -528,16 +544,18 @@ public class Milestone2 {
                                             case "2" :
                                                 System.exit(0);     
                                                 // Choice for an exit clause if needed.
-                                        default : 
-                                            System.out.println("Invalid Input!");
-                                            break;
-                                            // Terminates the program if the the input is not from the choices.
-                                        }    
-                                        break;
+                                            default : 
+                                                System.out.println("\n-- Invalid Input! --");
+                                                repeat = true;
+                                                break;
+                                                
+                                            }
+                                        }while (repeat);
+                                            // If the input is none of the choices, repeats the query.
                                         
                                     case "2" :
                                         getAllSalary();
-                                        break;
+                                        return;
                                         /*
                                             If [2] is chosen, calls the getAllSalary() method in order to print all the payroll information 
                                         */
@@ -546,19 +564,24 @@ public class Milestone2 {
                                          // Choice for an exit clause if needed.
                                         
                                     default : 
-                                        System.out.println("Invalid Input!");  
-                                        // Terminates the program if the the input is not from the choices.
-                                }
-                                break;
+                                        System.out.println("\n-- Invalid Input! --");
+                                        repeat = true;
+                                        break;
+                                        
+                                    }
+                                }while (repeat); 
+                                // If the input is none of the choices, repeats the query.
                             
                             case "2" :
                                 System.exit(0);
                              
                             default: 
-                                System.out.println("Invalid Input!");             
-                        }   
-    
-                        break;
+                                System.out.println("\n-- Invalid Input! --");
+                                repeat = true;
+                                break;
+                        }    
+                    }while (repeat);
+                        
                         
                     }else{
                         System.out.println("Incorrect username and/or password.");   
@@ -567,7 +590,8 @@ public class Milestone2 {
                     }
                 default: 
                     System.out.println("Incorrect username and/or password.");
-                    // Terminates the program if one or both the password and username are incorrect.
+                  
+                // Terminates the program if one or both the password and username are incorrect.
             }       
         } 
     } 
