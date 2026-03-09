@@ -68,7 +68,8 @@ public class Milestone2 {
             int monthCount = 6;
         
             for (String row[] : attendanceStorage){
- 
+                // Reads each array inside attendanceStorage one by one.
+                // Each array contains one line from the CSV file.
                 if (row[0].equals(employeeNumber)){
                     
                     String[] dateSplit = row[3].split("/");
