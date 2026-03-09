@@ -29,6 +29,7 @@ public class Milestone2 {
     
     static HashMap<String, String[]> dataStorage = new HashMap<>();
     // Initializes a Hashmap to store the necessary employee data.
+    // Stored outside in order to be accessible to every method.
 
     public static void getEmployeeData(String employeeNumber){
             boolean checker = false;
@@ -47,6 +48,9 @@ public class Milestone2 {
                 }
                 if (checker != true){
                     System.out.println("Employee number does not exist.");
+                    
+                 // Checks the checker value is returns false. If it does, exits the loop and prints "Employee Number does not exist.    
+                 
                 }
             // Uses the dataStorage hashmap to read the employee data and prints the necessary ones.
     }
@@ -105,7 +109,7 @@ public class Milestone2 {
                 if (checker != true){
                     System.out.println("Employee Number does not exist.");
                     return;
-                    // Checks the checker value if the Employee Number exists. If not, ends the loop.
+                    // Checks the checker value is returns false. If it does, exits the loop and prints "Employee Number does not exist. 
 
                 }
                 printPayroll(firstHalf,secondHalf,employeeNumber,monthCount);
@@ -188,6 +192,7 @@ public class Milestone2 {
             System.out.println("An error occurred while reading the file.");
             // General catch block for errors.
         }    
+        // Reads the CSV file and saves the necessary values in a hashmap <String, String[]>.
     }     
     public static void getAllSalary(){
             String filePath = "src/Resources/AttendanceData.csv";
