@@ -563,8 +563,8 @@ public class Milestone2 {
                                                 
                                             case "2" :
                                                 System.exit(0);    
-                                                
-                                                // Choice for an exit clause if needed.
+                                                // Skipped a break statement as it already exits the program
+                                                // Given a choice for an exit clause if needed.
                                             default : 
                                                 System.out.println("\n-- Invalid Input! Try again. --");
                                                 repeat = true;
@@ -583,7 +583,8 @@ public class Milestone2 {
                                         */
                                     case "3" : 
                                         System.exit(0);
-                                         // Choice for an exit clause if needed.
+                                        // Skipped a break statement as it already exits the program
+                                        // Given a choice for an exit clause if needed.
                                         
                                     default : 
                                         System.out.println("\n-- Invalid Input! Try again. --");
@@ -597,7 +598,8 @@ public class Milestone2 {
                                 break;
                             case "2" :
                                 System.exit(0);
-                                
+                                // Skipped a break statement as it already exits the program
+                                // Given a choice for an exit clause if needed.
                             default: 
                                 System.out.println("\n-- Invalid Input! Try again. --");
                                 repeat = true;
@@ -615,7 +617,7 @@ public class Milestone2 {
                     break;
                 default: 
                     System.out.println("Incorrect username and/or password.");
-                    
+                    break;
                 // Terminates the program if one or both the password and username are incorrect.
             }       
         } 
