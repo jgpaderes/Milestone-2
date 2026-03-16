@@ -31,41 +31,44 @@ public class Milestone2 {
     
     static HashMap<String, String[]> dataStorage = new HashMap<>();
     // Initializes a Hashmap to store the necessary employee data.
-    // Stored outside in order to be accessible to every method.
+    // The HashMap is stored outside in order to be accessible to every method.
     
     static ArrayList<String[]> attendanceStorage = new ArrayList<>();
     // Initializes an ArrayList to store the necessary attendance data.
-    // Stored outside in order to be accessible to every method.
+    // The ArrayList is stored outside in order to be accessible to every method.
 
     public static void getEmployeeData(String employeeNumber){
-            boolean checker = false;
+            boolean idChecker = false;
+                // Sets a checker value to be false to be used as an exit statement when the id number is not found.
 
                 for (String empNum : dataStorage.keySet()) {
                     // Checks the keys of the array (employee number) which connects to the array that holds the employee data.
                     String[] tempArray = dataStorage.get(empNum);
                     // Sets a temporary array to store the values from the dataStorage hashmap based on the key (employee number).
                     if (empNum.equals(employeeNumber)){
-                        checker = true;
+                        idChecker = true;
                         System.out.println("************************************** \n"); 
                         System.out.println("Employee Number: " + empNum +"\n" + "Employee Name: " + tempArray[0] + "\n" + "Birthday: " + tempArray[1] + "\n");
                         System.out.println("**************************************"); 
                         break;
                     }       
                 }
-                if (checker != true){
+                if (idChecker != true){
                     System.out.println("Employee number does not exist.");
                     
-                 // Checks the checker value is returns false. If it does, exits the loop and prints "Employee Number does not exist.    
+                 // Checks the idChecker value is returns false. If it does, exits the loop and prints "Employee Number does not exist.    
                  
                 }
             // Uses the dataStorage hashmap to read the employee data and prints the necessary ones.
     }
     public static void getSingleSalary(String employeeNumber){
             DateTimeFormatter format = DateTimeFormatter.ofPattern("H:mm");
-            boolean checker = false;
+            boolean idChecker = false;
+            // Sets a checker value to be false to be used as an exit statement when the id number is not found.
             double firstHalf = 0;
             double secondHalf = 0; 
             int monthCount = 6;
+            // Sets 6 as a start on the counter value for the months denoting the month June.
         
             for (String row[] : attendanceStorage){
                 // Reads each array inside attendanceStorage one by one.
@@ -74,18 +77,21 @@ public class Milestone2 {
                     
                     String[] dateSplit = row[3].split("/");
                     int monthNo = Integer.parseInt(dateSplit[0]);
+                    // Takes the [0] value of the string dateSplit and saves it as an integer variable.
                     int date = Integer.parseInt(dateSplit[1]);
+                    // Takes the [1] value of the string dateSplit and saves it as an integer variable.
                     LocalTime logIn = LocalTime.parse(row[4], format); LocalTime logOut = LocalTime.parse(row[5], format);
+                    // Takes the [4] and [5] value of the array row and parses it based of the "format" value set.
                     double hours = getHours(logIn,logOut);
-                    checker = true;
-                    // Add a checker value that returns true if the Employee number is found
+                    idChecker = true;
+                    // Adds an idChecker value that returns true if the Employee number is found
 
                         
                     if (monthCount <= 12){
                         
                         if (monthCount != monthNo){ 
                             printPayroll(firstHalf,secondHalf,employeeNumber,monthCount);
-                            // Prints payroll summary at the end of each month
+                            // Prints the payroll summary at the end of each month
                             monthCount++;
                             firstHalf = 0;
                             secondHalf = 0;
@@ -105,23 +111,18 @@ public class Milestone2 {
                         }
                 }         
             }
-            if (checker != true){
+            if (idChecker != true){
                 System.out.println("Employee Number does not exist.");
                 System.exit(0);
-                // Checks the checker value is returns false. If it does, exits the loop and prints "Employee Number does not exist. 
+                // Checks the idChecker value if it returns false. If it does, exits the loop and prints "Employee Number does not exist. 
             }   
             printPayroll(firstHalf,secondHalf,employeeNumber,monthCount); 
              // Repeated outside the while loop to catch December as the loop stops after reading the last item in the CSV
         } 
     public static String getRate(String employeeNumber){
             String[] tempArray = dataStorage.get(employeeNumber);
-            String rate = null;
-                for (String empNum : dataStorage.keySet()) {
-                
-                    if (empNum.equals(employeeNumber)){
-                        rate = tempArray[2]; 
-                    }
-                }
+            String rate = tempArray[2];
+           
         return rate;
         // Gets the array from the hashmap (dataStorage) based on the key (employeeNumber). Returns the 3rd value in the array which is the rate
     }
@@ -174,22 +175,25 @@ public class Milestone2 {
                 double firstHalf = 0;
                 double secondHalf = 0;
                 int monthCount = 6;
+                // Sets 6 as a start on the counter value for the months denoting the month June.
                 lastArray = attendanceStorage.get(attendanceStorage.size()- 1);
                 // Finds the last array inside the ArrayList (attendanceStorage).
                 lastId = lastArray[0];
-                
-                // Gets the first value inside the last array to be used for the while conditional.
+                // Holds the first value inside the last array to be used for the while conditional.
                 for (String row[] : attendanceStorage){
                    
                         employeeNumber = row[0];
- 
+                        // Gets the first value in the array to be used in comparison of the empCheck value.
                         if (empCheck == (Integer.parseInt(employeeNumber))){
 
                             String[] dateSplit = row[3].split("/");
                             int monthNo = Integer.parseInt(dateSplit[0]);
+                            // Takes the [0] value of the string dateSplit and saves it as an integer variable.
                             int date = Integer.parseInt(dateSplit[1]);
+                            // Takes the [1] value of the string dateSplit and saves it as an integer variable.
                             LocalTime logIn = LocalTime.parse(row[4], format); LocalTime logOut = LocalTime.parse(row[5], format);
                             double hours = getHours(logIn,logOut);
+                            // Holds the current hours worked value after calling the method getHours().
                     
                             if (monthCount <= 12){
                             
@@ -208,20 +212,25 @@ public class Milestone2 {
                                 }else{
                                     secondHalf += hours;
                                 }
+                                
                             // Uses the variables "firstHalf" and "secondHalf" as a placholder variable to hold the hours value and add it to itself until the set cutoff date is reached.
-
+                                
                             }    
                         }
-                }    
- 
-                printPayroll(firstHalf,secondHalf,employeeNumber,monthCount);
+                        
+                }
+                printPayroll(firstHalf,secondHalf,String.valueOf(empCheck),monthCount);
+                /* 
+                   Prints the payroll using the "empCheck" value instead of the "employeeNumber" to always get the current id number 
+                   because the method is outside the for loop and would always take the last id number. 
+                */
                 empCheck += 1;
                 
                 // Repeated outside the while loop to catch December as the loop stops after reading the last item in the CSV
         
             }while (empCheck <= Integer.parseInt(lastId));
             // Continues until the checker value (empCheck) goes above the last id
-            // Breaks the loop going above the last id.
+            // Breaks the loop is the empCheck value goes above the last id.
     }
     
     public static double getSSS(double grossSalary){
@@ -312,17 +321,12 @@ public class Milestone2 {
         
     public static void readEmployeeData(String employeeNumber){
                      
-            for (String empNum : dataStorage.keySet()) {
-                // Checks the keys of the array (employee number) which connects to the array that holds the employee data.
-                String[] tempArray = dataStorage.get(empNum);
-                // Sets a temporary array to store the values from the dataStorage hashmap based on the key (employee number)
-                    
-                if (empNum.equals(employeeNumber)){
-                       
-                    System.out.println("Employee Number: " + empNum +"\n" + "Employee Name: " + tempArray[0] + "\n" + "Birthday: " + tempArray[1] + "\n");
-                }
+            String[] tempArray = dataStorage.get(employeeNumber);
+            
+            System.out.println("Employee Number: " + employeeNumber +"\n" + "Employee Name: " + tempArray[0] + "\n" + "Birthday: " + tempArray[1] + "\n");
+
                 // Initializes a temporary array to hold the information needed based on the key (employee number). Prints the necessary information afterwards.
-        }
+        
     }
     public static void storeEmployeeData(){
    
@@ -339,10 +343,15 @@ public class Milestone2 {
 
                     String[] values = row.split(delimiter);
                     int len = values.length;
+                    // Takes the array length of values and saves it into the variable "len"
                     String empNumber = values[0];
+                    // Takes the first value in the array and saves it into the string "empNumber"
                     String name = (values[1] +", "+ values[2]);
+                    // Takes the second and third value in the array then combines them to form the variable "name"
                     String birthday = values[3];
+                    // Takes the fourth value in the array and saves it into the string "birthday"
                     String rate = values[len-1];
+                    // Takes the last value in the array by using the variable "len" and subtracting 1 from it.
 
                 dataStorage.put(empNumber, new String[]{name, birthday, rate});
             }
@@ -371,6 +380,7 @@ public class Milestone2 {
                 String[] values = row.trim().split(delimiter);
               
                 attendanceStorage.add(values);
+                // Saves each value in the array.
             } 
             }catch (IOException e) {
                 System.out.println("An error occurred while reading the file.");
@@ -395,13 +405,14 @@ public class Milestone2 {
     }
     
     public static double totalDeductions(double grossSalary, double firstHalf, double secondHalf, String employeeNumber){
-            return  getSSS(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber))) +
-                    getPhilHealth(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)))+
-                    getPagIbig(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)))+
-                    getWithholdingTax(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)));
-                    // Adds all the deductions.
+            double tempSalary = grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber));
+                 // Sets a temporary variable to hold the gross salary amount to prevent the need of constant calling of the grossSalary() method.
+            return  getSSS(tempSalary) + getPhilHealth(tempSalary)+ getPagIbig(tempSalary)+ getWithholdingTax(tempSalary);
+                    // Adds all the deductions and returns the total as totalDeductions.
     }
     public static void printPayroll(double firstHalf, double secondHalf, String employeeNumber, int monthCount){
+            double tempSalary = grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber));
+                // Sets a temporary variable to hold the gross salary amount to prevent the need of constant calling of the grossSalary() method.
             System.out.println("**************************************\n");
             readEmployeeData(String.valueOf(employeeNumber));
             // Prints the employee data based on the employee number.
@@ -413,12 +424,11 @@ public class Milestone2 {
             System.out.println("Total Hours Worked: " + secondHalf);
             System.out.println("Gross Salary: " +  secondGrossSalary(secondHalf,employeeNumber));
             System.out.println("Each Decuction:");
-            System.out.println("\tSSS: " + getSSS(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber))));
-            System.out.println("\tPhilHealth: " + getPhilHealth(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber))));
-            System.out.println("\tPag-IBIG: "+ getPagIbig(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber))));
-            System.out.println("\tTax: "+ getWithholdingTax(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber))));
-            System.out.println("Total Deductions: " + totalDeductions(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)), firstHalf, secondHalf, employeeNumber));
-            System.out.println("Net Salary: " + (grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)) - totalDeductions(grossSalary(firstGrossSalary(firstHalf,employeeNumber),secondGrossSalary(secondHalf,employeeNumber)), firstHalf, secondHalf, employeeNumber)));
+            System.out.println("\tSSS: " + getSSS(tempSalary));
+            System.out.println("\tPhilHealth: " + getPhilHealth(tempSalary));
+            System.out.println("\tPag-IBIG: "+ getPagIbig(tempSalary));
+            System.out.println("\tTax: "+ getWithholdingTax(tempSalary));
+            System.out.println("Net Salary: " + (tempSalary - totalDeductions(tempSalary, firstHalf, secondHalf, employeeNumber)));
             System.out.println("\n**************************************");
             // Takes in the parameter values needed by the other methods and variables then prints the payroll details.
     }
@@ -434,7 +444,9 @@ public class Milestone2 {
         System.out.println("Enter your username and password:  ");
         System.out.print("Username:  ");
         String workerType = input.nextLine();
+        // Takes the input at saves it into the string "workerType"
         System.out.print("Password:  ");
+        // Takes the input at saves it into the string "password"
         String password = input.nextLine();
         
         // Asks for both username and password. If one or both are incorrect prints "Incorrect username and/or password" and exits the program.
@@ -462,6 +474,7 @@ public class Milestone2 {
                                     System.out.print("Enter your employee number: ");
                                     String employeeNumber = input.nextLine();
                                     getEmployeeData(employeeNumber);
+                                    break;
                                 case "2" :
                                     System.exit(0);
                                 default: 
@@ -481,7 +494,8 @@ public class Milestone2 {
                     }else{
                         System.out.println("Incorrect username and/or password.");
                         break;
-                    }                     
+                    }      
+                    break;
                 case "payroll_staff":     
                     
                     if("12345".equals(password)){
@@ -542,13 +556,14 @@ public class Milestone2 {
                                                 System.out.print("\nInput Employee No: ");
                                                 String employeeNumber = empInput.nextLine();
                                                 getSingleSalary(employeeNumber);
-                                                return;
+                                                break;
                                                 /*
                                                     Asks for employee number input and passes the number to the getSingleSalary() method in order to get the payroll info.
                                                 */
                                                 
                                             case "2" :
-                                                System.exit(0);     
+                                                System.exit(0);    
+                                                
                                                 // Choice for an exit clause if needed.
                                             default : 
                                                 System.out.println("\n-- Invalid Input! Try again. --");
@@ -559,10 +574,10 @@ public class Milestone2 {
                                         }while (repeat);
                                             // If the input is none of the choices, repeats the query.
                                             // Starts the repeat value as false, If the input is invalid, repeat becomes true and starts a loop.
-                                        
+                                        break;    
                                     case "2" :
                                         getAllSalary();
-                                        return;
+                                        break;
                                         /*
                                             If [2] is chosen, calls the getAllSalary() method in order to print all the payroll information 
                                         */
@@ -579,9 +594,10 @@ public class Milestone2 {
                                 }while (repeat); 
                                 // If the input is none of the choices, repeats the query.
                                 // Starts the repeat value as false, If the input is invalid, repeat becomes true and starts a loop.
+                                break;
                             case "2" :
                                 System.exit(0);
-                             
+                                
                             default: 
                                 System.out.println("\n-- Invalid Input! Try again. --");
                                 repeat = true;
@@ -596,9 +612,10 @@ public class Milestone2 {
                         break;
                         // Terminates the program if one or both the password and username are incorrect.
                     }
+                    break;
                 default: 
                     System.out.println("Incorrect username and/or password.");
-                  
+                    
                 // Terminates the program if one or both the password and username are incorrect.
             }       
         } 
