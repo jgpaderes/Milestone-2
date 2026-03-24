@@ -473,16 +473,19 @@ public class Milestone2 {
                                 case "1" : 
                                     System.out.print("Enter your employee number: ");
                                     String employeeNumber = input.nextLine();
-                                    getEmployeeData(employeeNumber);
-                                    break;
+                                    getEmployeeData(employeeNumber);  
+                                    return;
+                                    // Uses return to break the entire loop and get out of the infinite do-while loop.
                                 case "2" :
                                     System.exit(0);
+                                    // Skipped a break statement as it already exits the program
+                                    // Given a choice for an exit clause if needed.
                                 default: 
                                     System.out.println("\n-- Invalid Input! Try again. --");
                                     repeat = true;
                                     break;
                             }
-                        }while (repeat);
+                        }while(repeat);
                         
                         /*  If the input is employee and the password is correct, gives the choice for the employee number input or to exit the program. 
                          *  If the employee number is correct, proceeds with getting the employee data with (getEmployeeData(employeeNumber)).  
@@ -490,12 +493,12 @@ public class Milestone2 {
                          *  If the input is none of the choices, repeats the query.
                          *  Starts the repeat value as false, If the input is invalid, repeat becomes true and starts a loop.
                          */
-                          
+                        break;  
                     }else{
                         System.out.println("Incorrect username and/or password.");
                         break;
                     }      
-                    break;
+                    
                 case "payroll_staff":     
                     
                     if("12345".equals(password)){
@@ -556,9 +559,10 @@ public class Milestone2 {
                                                 System.out.print("\nInput Employee No: ");
                                                 String employeeNumber = empInput.nextLine();
                                                 getSingleSalary(employeeNumber);
-                                                break;
+                                                return;
                                                 /*
                                                     Asks for employee number input and passes the number to the getSingleSalary() method in order to get the payroll info.
+                                                    Uses return to break the entire loop and get out of the infinite do-while loop.
                                                 */
                                                 
                                             case "2" :
@@ -608,13 +612,13 @@ public class Milestone2 {
                         }while (repeat);
                             // If the input is none of the choices, repeats the query.
                             // Starts the repeat value as false, If the input is invalid, repeat becomes true and starts a loop.
-                        
+                        break;
                     }else{
                         System.out.println("Incorrect username and/or password.");   
                         break;
                         // Terminates the program if one or both the password and username are incorrect.
                     }
-                    break;
+                    
                 default: 
                     System.out.println("Incorrect username and/or password.");
                     break;
