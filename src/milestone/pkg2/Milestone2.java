@@ -493,12 +493,12 @@ public class Milestone2 {
                          *  If the input is none of the choices, repeats the query.
                          *  Starts the repeat value as false, If the input is invalid, repeat becomes true and starts a loop.
                          */
-                        break;  
+                          
                     }else{
                         System.out.println("Incorrect username and/or password.");
                         break;
                     }      
-                    
+                    break;
                 case "payroll_staff":     
                     
                     if("12345".equals(password)){
@@ -612,13 +612,13 @@ public class Milestone2 {
                         }while (repeat);
                             // If the input is none of the choices, repeats the query.
                             // Starts the repeat value as false, If the input is invalid, repeat becomes true and starts a loop.
-                        break;
+                        
                     }else{
                         System.out.println("Incorrect username and/or password.");   
                         break;
                         // Terminates the program if one or both the password and username are incorrect.
                     }
-                    
+                    break;
                 default: 
                     System.out.println("Incorrect username and/or password.");
                     break;
